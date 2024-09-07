@@ -6,34 +6,35 @@
 /*   By: oer-refa <oer-refa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:36:23 by oer-refa          #+#    #+#             */
-/*   Updated: 2024/09/04 10:27:03 by oer-refa         ###   ########.fr       */
+/*   Updated: 2024/09/07 08:59:17 by oer-refa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	data_init(t_data *data, t_philo *philo)
+int	data_init(t_data *data, t_philo *philo)
 {
 	long i = 0;
-	
 	data->philos = malloc (sizeof(t_philo) * (data->number_of_philosophers));
 	if (data->philos == NULL)
-		clean(data);
+		return(-1);
 	//TODO FREE
-	data->forks = malloc (sizeof(pthread_mutex_t) * (data->number_of_philosophers));
+	data->forks = malloc (sizeof(t_fork) * (data->number_of_philosophers)); 
 	if (data->forks == NULL)
-		clean(data);
+		malloc_error(data);
 	//TODO FREE
 	while(i < data->number_of_philosophers)
 	{
-		better_mutex_handle(&data->forks[i].fork, INIT);
+		if (better_mutex_handle(&(data->forks[i].fork), INIT) == -1)
+			return (-1);
 		data->forks[i].fork_id = i;
 		i++;
 	}
 	philos_init(data,philo);
+	return (0);
 }
 
-void	philos_init(t_data *data, t_philo *philo)
+static void	philos_init(t_data *data, t_philo *philo)
 {
 	int i;
 
@@ -46,13 +47,12 @@ void	philos_init(t_data *data, t_philo *philo)
 		philo->full = false;
 		philo->data = data;
 		forks_assign(philo,data->forks,i);
-		// printf("data of a philo is %d\n%ld\n%d\n",philo->philo_id,philo->nbr_of_meals,philo->full);
-		printf("here");
+		// printf("philo id is ==> %d\nthe number of meals is ==> %ld\nis he full ==>%d\n",philo->philo_id,philo->nbr_of_meals,philo->full);
 		i++;
 	}
 }
 
-void	forks_assign(t_philo *philo,t_fork *fork, int fork_index)
+static void	forks_assign(t_philo *philo,t_fork *fork, int fork_index)
 {
 	/**
 	 * * In this function i have used the EVEN and ODD thing to prevent the deadlock

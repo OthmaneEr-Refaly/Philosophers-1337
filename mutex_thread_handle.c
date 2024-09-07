@@ -6,19 +6,19 @@
 /*   By: oer-refa <oer-refa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 09:52:42 by oer-refa          #+#    #+#             */
-/*   Updated: 2024/09/04 09:38:02 by oer-refa         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:08:20 by oer-refa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 
-static void	handle_mutex_error(int status, t_opcode opcode)
+static int	handle_mutex_error(int status, t_opcode opcode)
 {
 	//TODO YOU NEED TO ADD THE ERROR_EXIT FUNCTION IN HERE
 	//TODO AND DONT FOGRIT TO DESTROY THE MUTEXES.
-	if ( status == 0)
-		return;
+	if (status == 0)
+		return 0;
 	else if (status == EAGAIN && (opcode == LOCK || opcode == UNLOCK))
 		printf("The mutex could not be acquired because the maximum number of recursive locks for mutex has been exceeded.");
 	else if (status == ENOTRECOVERABLE && (opcode == LOCK || opcode == UNLOCK))
@@ -33,23 +33,25 @@ static void	handle_mutex_error(int status, t_opcode opcode)
 		printf("Insufficient memory exists to initialize the mutex.");
 	else if (status == EPERM)
 		printf("The caller does not have the privilege to perform the operation.");
+	return (-1);
 }
 
 
-void	better_mutex_handle(t_mtx *mutex, t_opcode opcode)
+int	better_mutex_handle(t_mtx *mutex, t_opcode opcode)
 {
 	//TODO DONT FORGITE TO HANDLE THE MUTEX ERROR;
 	
 	if (LOCK == opcode)
-		handle_mutex_error(pthread_mutex_lock(mutex), opcode);
+		return  handle_mutex_error(pthread_mutex_lock(mutex), opcode);
 	else if (UNLOCK == opcode)
-		handle_mutex_error(pthread_mutex_unlock(mutex), opcode);
+		return handle_mutex_error(pthread_mutex_unlock(mutex), opcode);
 	else if (DESTROY == opcode)
-		handle_mutex_error(pthread_mutex_destroy(mutex), opcode);
+		return handle_mutex_error(pthread_mutex_destroy(mutex), opcode);
 	else if (INIT == opcode)
-		handle_mutex_error(pthread_mutex_init(mutex,NULL), opcode);
+		return handle_mutex_error(pthread_mutex_init(mutex,NULL), opcode);
 	else
 		printf("mutex error");
+	return (-1);
 }
 
 static int	handle_thread_error(int status, t_opcode opcode)

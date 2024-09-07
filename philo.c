@@ -6,7 +6,7 @@
 /*   By: oer-refa <oer-refa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 14:43:22 by oer-refa          #+#    #+#             */
-/*   Updated: 2024/09/01 09:45:37 by oer-refa         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:49:16 by oer-refa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int	main(int argc, char **argv)
 		t_philo philo;
 		parcing(&data,argv);
 		// //TODO 2) then i need to init the data to work with.
-		data_init(&data, &philo);
-
+		if (data_init(&data, &philo) == -1)
+		{
+			return (1);
+		}
 		// //TODO 3) solver the philo problem.
-		// solving_philos_problem(&data);
+		solving_philos_problem(&data);
 		
 		// //TODO 4) clean everything no leaks allowed.
 		// clean(&data);

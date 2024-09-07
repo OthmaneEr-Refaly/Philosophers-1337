@@ -6,7 +6,7 @@
 /*   By: oer-refa <oer-refa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 14:58:40 by oer-refa          #+#    #+#             */
-/*   Updated: 2024/09/04 10:04:14 by oer-refa         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:45:09 by oer-refa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ size_t			ft_strlen(const char *str);
 
 
 /**
- * *Input functions
+ * *Input functions*
  */
 void				parcing(t_data *data, char **argv);
 static const char 	*valid_input(const char *av);
@@ -115,22 +115,29 @@ static const char 	*valid_input(const char *av);
 /**
  * *Data init functions
  */
-void	data_init(t_data *data, t_philo *philo);
+int		data_init(t_data *data, t_philo *philo);
 void	here(t_data *data, t_philo philo);
-void	philos_init(t_data *data, t_philo *philo);
-void	forks_assign(t_philo *philo,t_fork *fork, int fork_index);
+static void	forks_assign(t_philo *philo,t_fork *fork, int fork_index);
+static void	philos_init(t_data *data, t_philo *philo);
 
 /**
- * *Threads and Mutex Functions
+ * *Threads and Mutex functions
  */
-void		better_mutex_handle(t_mtx *mutex, t_opcode opcode);
-void		better_threads_handle(pthread_t *threads, t_opcode opcode);
+int			better_mutex_handle(t_mtx *mutex, t_opcode opcode);
+int			better_threads_handle(pthread_t *threads, t_opcode opcode);
 int			handle_thread_operation(pthread_t *thread, void *(*start_routine)(void *), void *arg, t_opcode opcode);
 static int	handle_thread_error(int status, t_opcode opcode);
-void		better_mutex_handle(t_mtx *mutex, t_opcode opcode);
-static void	handle_mutex_error(int status, t_opcode opcode);
+static int	handle_mutex_error(int status, t_opcode opcode);
 
+/**
+ * *Error handling functions
+ */
+void	malloc_error(t_data *data);
+int error_here(t_data *data);
 
-
+/**
+ * *Algorithms functions
+ */
+void	solving_philos_problem(t_data *data);
 
 #endif

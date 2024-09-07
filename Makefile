@@ -6,8 +6,9 @@ Green 	= \033[1;32m
 
 NAME	 = thinkers
 COMPILER = cc
-FLAGS	 = -Wall -Werror -Wextra
-SRCS	 = philo.c parcing.c helper_functions.c data_init.c mutex_thread_handle.c
+FLAGS	 = -Wall -Werror -Wextra -g3 #-fsanitize=address
+SRCS	 = 	philo.c parcing.c helper_functions.c data_init.c mutex_thread_handle.c error_handle.c \
+			solving_philos_problem.c
 
 OBJS	 = $(SRCS:.c=.o)
 
@@ -24,5 +25,5 @@ clean:
 	@rm -rf $(OBJS)
 fclean:
 	@rm -rf $(OBJS) $(NAME)
-re:
-	all fclean
+re: all fclean
+	

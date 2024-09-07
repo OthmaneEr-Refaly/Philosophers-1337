@@ -6,13 +6,15 @@
 /*   By: oer-refa <oer-refa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:25:14 by oer-refa          #+#    #+#             */
-/*   Updated: 2024/09/04 10:26:36 by oer-refa         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:52:40 by oer-refa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	clean(t_data *data)
+void	malloc_error(t_data *data)
 {
-	
+	free(data->philos);
+	free(data->forks);
+	return;
 }
