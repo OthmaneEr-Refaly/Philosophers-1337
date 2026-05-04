@@ -7,7 +7,6 @@ Philosophers is a famous concurrency project at 42 school based on Edsger Dijkst
 
 To eat, a philosopher needs two forks (one in their right hand, one in their left). The challenge is to prevent deadlocks, resource starvation, and data races while keeping the philosophers alive using POSIX threads (`pthread`) and mutexes.
 
-<a href="https://github.com/oakoudad/badge42"><img src="https://badge.mediaplus.ma/darkgray/abait-ou" alt="abait-ou's 42 stats" /></a>
 
 ## What We Learned
 This project is an introduction to multithreading and concurrency in C. By building it, I learned:
